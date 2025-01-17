@@ -9,7 +9,7 @@ app = FastAPI()
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://jayprajapati-rosy.vercel.app/"], # Local development
+    allow_origins=["https://jayprajapati-rosy.vercel.app"], # Local development
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -18,7 +18,7 @@ app.add_middleware(
 # Define the Contact Form Schema
 class ContactForm(BaseModel):
     name: str
-    mobile: str  # Added mobile number field
+    mobile: str  
     email: EmailStr
     message: str
 
