@@ -7,19 +7,19 @@ const navItems = [
   { label: "About", href: "#about" },
   { label: "Experience", href: "#experience" },
   { label: "Services", href: "#services" },
-  { label: "Contact", href: "#contact" },
+  { label: "Contact", href: "#Contact" },
 ];
 
 const Logo = () => (
   <motion.a
     href="#home"
-    className="flex items-center space-x-2 group"
+    className="flex items-center space-x-2 group cursor-pointer"
     whileHover={{ scale: 1.05 }}
     whileTap={{ scale: 0.95 }}
   >
     {/* Logo Icon */}
     <motion.div
-      className="relative w-8 h-8 bg-gradient-to-br from-white to-gray-400 rounded-lg overflow-hidden"
+      className="relative w-8 h-8 bg-gradient-to-br from-white to-gray-400 rounded-lg overflow-hidden cursor-pointer"
       whileHover={{ rotate: 360 }}
       transition={{ duration: 0.8, ease: "easeInOut" }}
     >
@@ -34,7 +34,7 @@ const Logo = () => (
     </motion.div>
 
     {/* Logo Text */}
-    <div className="flex flex-col">
+    <div className="flex flex-col cursor-pointer">
       <span className="text-xl font-extrabold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent leading-none">
         Jay
       </span>
@@ -127,7 +127,7 @@ export const Navbar = () => {
         transition={{ duration: 0.6 }}
       >
         <div className="max-w-6xl mx-auto px-4">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center justify-between h-16 ">
             <Logo />
 
             {/* Desktop Navigation with Download Button */}
@@ -137,7 +137,7 @@ export const Navbar = () => {
                   <motion.a
                     key={item.label}
                     href={item.href}
-                    className={`text-gray-300 hover:text-white font-medium transition-all relative ${
+                    className={`text-gray-300 hover:text-white font-medium transition-all relative cursor-pointer${
                       activeSection === item.href.substring(1) ? "text-white" : ""
                     }`}
                     whileHover={{ y: -3 }}
