@@ -1,0 +1,35 @@
+/* Custom cursor styles */
+* {
+  cursor: default;
+}
+
+a, button, 
+[role="button"],
+input, select, textarea {
+  cursor: pointer;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+  cursor: text;
+}
+
+/* Ensure cursor is visible on all backgrounds */
+* {
+  cursor: auto;
+  &:hover {
+    cursor: auto;
+  }
+}
+
+/* Custom selection color */
+::selection {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+/* Ensure text inputs have visible cursor */
+input, textarea {
+  caret-color: white;
+} 

@@ -1,43 +1,51 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Users, Rocket, LineChart, BookOpen, Heart, Shield } from 'lucide-react';
+import { 
+  Users, Target,  Heart,
+  TrendingUp, LineChart, MessageCircle 
+} from 'lucide-react';
 
-const services = [
+// Group services by category
+const serviceCategories = [
   {
-    title: 'Talent Acquisition',
-    description: 'Strategic recruitment and talent sourcing',
-    icon: Users,
-    stats: { success: 95, projects: 200 },
+    title: "Recruitment & Performance",
+    description: "Strategic talent acquisition and performance optimization",
+    services: [
+      {
+        icon: Users,
+        title: "Talent Acquisition",
+        description: "Strategic recruitment and talent sourcing to build high-performing teams that align with organizational goals.",
+        color: "from-blue-500/20 to-blue-600/20",
+        iconColor: "text-blue-400"
+      },
+      {
+        icon: Target,
+        title: "Performance Management",
+        description: "Customized training programs to enhance skills, foster career growth, and ensure employee success.",
+        color: "from-indigo-500/20 to-indigo-600/20",
+        iconColor: "text-indigo-400"
+      }
+    ]
   },
   {
-    title: 'Employee Development',
-    description: 'Career growth and training programs',
-    icon: Rocket,
-    stats: { success: 88, projects: 150 },
-  },
-  {
-    title: 'Performance Management',
-    description: 'Goal setting and achievement tracking',
-    icon: LineChart,
-    stats: { success: 92, projects: 180 },
-  },
-  {
-    title: 'Learning & Development',
-    description: 'Skill enhancement initiatives',
-    icon: BookOpen,
-    stats: { success: 90, projects: 120 },
-  },
-  {
-    title: 'Employee Relations',
-    description: 'Fostering positive workplace culture',
-    icon: Heart,
-    stats: { success: 94, projects: 250 },
-  },
-  {
-    title: 'Compliance Management',
-    description: 'Ensuring regulatory adherence',
-    icon: Shield,
-    stats: { success: 98, projects: 300 },
+    title: "Growth & Culture",
+    description: "Building strong organizational culture and employee development",
+    services: [
+      {
+        icon: TrendingUp,
+        title: "Employee Development",
+        description: "Career progression and skill enhancement programs",
+        color: "from-green-500/20 to-green-600/20",
+        iconColor: "text-green-400"
+      },
+      {
+        icon: Heart,
+        title: "Employee Relations",
+        description: "Fostering positive workplace relationships and culture",
+        color: "from-red-500/20 to-red-600/20",
+        iconColor: "text-red-400"
+      }
+    ]
   },
 ];
 
@@ -48,64 +56,77 @@ export const Services = () => {
   });
 
   return (
-    <section ref={ref} id="services" className="min-h-screen bg-gray-900 py-20 px-4">
+    <section ref={ref} id="services" className="min-h-screen bg-black py-20 px-4">
       <div className="max-w-6xl mx-auto">
-        <motion.h2
-          className="text-4xl font-bold text-center mb-16"
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
+          className="text-center mb-16"
         >
-          HR Services
-        </motion.h2>
+          <h2 className="text-4xl font-bold mb-6">Services</h2>
+          <p className="text-gray-400 max-w-2xl mx-auto">
+            Comprehensive HR solutions tailored to elevate your organization's potential
+          </p>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => (
+        <div className="space-y-20">
+          {serviceCategories.map((category, categoryIndex) => (
             <motion.div
-              key={service.title}
-              className="relative group perspective"
-              initial={{ opacity: 0, y: 50 }}
+              key={category.title}
+              initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: index * 0.1, duration: 0.8 }}
+              transition={{ duration: 0.8, delay: categoryIndex * 0.2 }}
+              className="space-y-8"
             >
-              <motion.div
-                className="bg-black p-8 rounded-xl shadow-xl group-hover:shadow-2xl transition-all duration-500 transform-gpu preserve-3d group-hover:rotate-y-180"
-                whileHover={{ scale: 1.05 }}
-              >
-                {/* Front */}
-                <div className="flex flex-col items-center text-center backface-hidden">
-                  <service.icon className="w-12 h-12 mb-6 text-white" />
-                  <h3 className="text-xl font-bold mb-4">{service.title}</h3>
-                  <p className="text-gray-400">{service.description}</p>
-                </div>
+              <div className="text-center">
+                <h3 className="text-2xl font-bold mb-2">{category.title}</h3>
+                <p className="text-gray-400">{category.description}</p>
+              </div>
 
-                {/* Back */}
-                <div className="absolute inset-0 p-8 bg-white text-black rounded-xl rotate-y-180 backface-hidden">
-                  <div className="h-full flex flex-col items-center justify-center">
-                    <h4 className="text-lg font-bold mb-4">Success Metrics</h4>
-                    <div className="space-y-4 w-full">
-                      <div>
-                        <p className="text-sm mb-1">Success Rate</p>
-                        <div className="w-full bg-gray-200 rounded-full h-2">
-                          <motion.div
-                            className="bg-black h-full rounded-full"
-                            initial={{ width: 0 }}
-                            animate={{ width: `${service.stats.success}%` }}
-                            transition={{ delay: 0.5, duration: 1 }}
-                          />
-                        </div>
-                        <p className="text-right text-sm mt-1">{service.stats.success}%</p>
-                      </div>
-                      <p className="text-center mt-4">
-                        {service.stats.projects}+ Projects Completed
-                      </p>
+              <div className="grid md:grid-cols-2 gap-8">
+                {category.services.map((service) => (
+                  <motion.div
+                    key={service.title}
+                    className="relative group"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${service.color} blur-xl group-hover:blur-2xl transition-all duration-300`} />
+                    <div className="relative bg-gray-900 p-8 rounded-2xl border border-gray-800 hover:border-gray-700 transition-colors">
+                      <service.icon className={`w-12 h-12 ${service.iconColor} mb-6`} />
+                      <h3 className="text-xl font-bold mb-4">{service.title}</h3>
+                      <p className="text-gray-400 mb-6">{service.description}</p>
+                      
+                      <motion.div
+                        className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity"
+                        whileHover={{ scale: 1.1 }}
+                      >
+                        <LineChart className="w-6 h-6 text-gray-400" />
+                      </motion.div>
                     </div>
-                  </div>
-                </div>
-              </motion.div>
+                  </motion.div>
+                ))}
+              </div>
             </motion.div>
           ))}
         </div>
+
+        {/* Call to Action */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="text-center mt-20"
+        >
+          <a 
+            href="#contact"
+            className="inline-flex items-center gap-2 px-8 py-3 bg-white text-black rounded-full font-semibold hover:bg-gray-200 transition-colors"
+          >
+            <MessageCircle className="w-5 h-5" />
+            <span>Discuss Your HR Needs</span>
+          </a>
+        </motion.div>
       </div>
     </section>
   );

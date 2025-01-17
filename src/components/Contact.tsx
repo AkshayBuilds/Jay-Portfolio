@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Mail, Linkedin, Phone } from 'lucide-react';
+import { Mail, Linkedin, Phone, Instagram, MessageCircle } from 'lucide-react';
 
 export const Contact = () => {
   const [ref, inView] = useInView({
@@ -36,6 +36,17 @@ export const Contact = () => {
                   type="text"
                   className="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent transition-shadow"
                   placeholder="Your name"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-400 mb-2">
+                  Mobile Number
+                </label>
+                <input
+                  type="tel"
+                  pattern="[0-9]{10}"
+                  className="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent transition-shadow"
+                  placeholder="Your mobile number"
                 />
               </div>
               <div>
@@ -85,14 +96,42 @@ export const Contact = () => {
 
             <div className="space-y-6">
               {[
-                { icon: Mail, text: 'jay@example.com', href: 'mailto:jay@example.com' },
-                { icon: Phone, text: '+1 (555) 123-4567', href: 'tel:+15551234567' },
-                { icon: Linkedin, text: 'LinkedIn Profile', href: '#' },
+                { 
+                  icon: Mail, 
+                  text: 'hr.jayprajapati@gmail.com', 
+                  href: 'mailto:hr.jayprajapati@gmail.com',
+                  hoverColor: 'hover:text-blue-400'
+                },
+                { 
+                  icon: Phone, 
+                  text: '+91 9106940132', 
+                  href: 'tel:+919106940132',
+                  hoverColor: 'hover:text-green-400'
+                },
+                { 
+                  icon: MessageCircle, 
+                  text: 'WhatsApp', 
+                  href: 'https://wa.me/919106940132',
+                  hoverColor: 'hover:text-[#25D366]'
+                },
+                { 
+                  icon: Linkedin, 
+                  text: 'LinkedIn Profile', 
+                  href: 'https://www.linkedin.com/in/jayprajapati3l6/',
+                  hoverColor: 'hover:text-[#0A66C2]'
+                },
+                { 
+                  icon: Instagram, 
+                  text: 'Instagram', 
+                  href: 'https://www.instagram.com/hrjayprajapati',
+                  hoverColor: 'hover:text-[#E4405F]'
+                },
               ].map((item, index) => (
                 <motion.a
                   key={index}
                   href={item.href}
-                  className="flex items-center space-x-4 text-gray-400 hover:text-white transition-colors"
+                  target='_blank'
+                  className={`flex items-center space-x-4 text-gray-400 ${item.hoverColor} transition-colors`}
                   whileHover={{ x: 10 }}
                 >
                   <item.icon className="w-6 h-6" />

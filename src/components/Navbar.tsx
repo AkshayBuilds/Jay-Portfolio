@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Download } from "lucide-react";
 
 const navItems = [
   { label: "Home", href: "#home" },
@@ -104,6 +104,16 @@ export const Navbar = () => {
     };
   }, []);
 
+  const handleDownload = () => {
+    const fileUrl = '/JayPrajapatiCV.pdf';
+    const link = document.createElement('a');
+    link.href = fileUrl;
+    link.download = 'Jay_Prajapati_Resume.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <>
       <motion.nav
@@ -118,43 +128,66 @@ export const Navbar = () => {
       >
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex items-center justify-between h-16">
-            {/* Replace old logo with new Logo component */}
             <Logo />
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex space-x-8">
-              {navItems.map((item) => (
-                <motion.a
-                  key={item.label}
-                  href={item.href}
-                  className={`text-gray-300 hover:text-white font-medium transition-all relative ${
-                    activeSection === item.href.substring(1) ? "text-white" : ""
-                  }`}
-                  whileHover={{ y: -3 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {item.label}
-                  {/* Active link underline animation */}
-                  {activeSection === item.href.substring(1) && (
-                    <motion.div
-                      className="absolute bottom-0 left-0 w-full h-0.5 bg-white rounded-full"
-                      layoutId="activeSection"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                </motion.a>
-              ))}
+            {/* Desktop Navigation with Download Button */}
+            <div className="hidden md:flex items-center">
+              <div className="flex space-x-8 mr-6">
+                {navItems.map((item) => (
+                  <motion.a
+                    key={item.label}
+                    href={item.href}
+                    className={`text-gray-300 hover:text-white font-medium transition-all relative ${
+                      activeSection === item.href.substring(1) ? "text-white" : ""
+                    }`}
+                    whileHover={{ y: -3 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                    {activeSection === item.href.substring(1) && (
+                      <motion.div
+                        className="absolute bottom-0 left-0 w-full h-0.5 bg-white rounded-full"
+                        layoutId="activeSection"
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                  </motion.a>
+                ))}
+              </div>
+
+              <motion.button
+                onClick={handleDownload}
+                className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 
+                  border border-white/10 hover:border-white/30 transition-all duration-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Download className="w-4 h-4" />
+                <span className="text-sm font-medium">Resume</span>
+              </motion.button>
             </div>
 
-            {/* Mobile Menu Button */}
-            <motion.button
-              className="md:hidden text-white"
-              whileTap={{ scale: 0.9 }}
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              {isMobileMenuOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
-            </motion.button>
+            {/* Mobile Menu Button and Download Button */}
+            <div className="md:hidden flex items-center gap-4">
+              <motion.button
+                onClick={handleDownload}
+                className="flex items-center gap-2 px-3 py-2 rounded-full bg-white/10 hover:bg-white/20 
+                  border border-white/10 hover:border-white/30 transition-all duration-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Download className="w-4 h-4" />
+              </motion.button>
+
+              <motion.button
+                className="text-white"
+                whileTap={{ scale: 0.9 }}
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              >
+                {isMobileMenuOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
+              </motion.button>
+            </div>
           </div>
         </div>
 

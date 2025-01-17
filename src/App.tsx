@@ -6,10 +6,11 @@ import { Experience } from './components/Experience';
 import { Services } from './components/Services';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
+import './styles/globals.css';
 
 function App() {
   return (
-    <div className="bg-black text-white">
+    <div className="bg-black text-white selection:bg-white/20 selection:text-white">
       <Navbar />
       <Hero />
       <About />

@@ -29,19 +29,11 @@ export const About = () => {
           {/* Image */}
           <div className="relative group">
             <img
-              src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800"
+              src="/Jay.jpeg"
               alt="Jay Prajapati"
               className="rounded-lg shadow-2xl transition-transform duration-500 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg flex items-center justify-center">
-              <div className="text-white text-center p-6">
-                <h3 className="text-xl font-bold mb-2">Fun Facts</h3>
-                <ul className="text-sm">
-                  <li>• Coffee enthusiast ☕</li>
-                  <li>• Amateur photographer 📸</li>
-                  <li>• Marathon runner 🏃‍♂️</li>
-                </ul>
-              </div>
+            <div className="absolute inset-0 bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-lg flex items-center justify-center">
             </div>
           </div>
 
@@ -49,9 +41,8 @@ export const About = () => {
           <div>
             <h2 className="text-4xl font-bold mb-6 text-white">About Me</h2>
             <p className="text-gray-300 mb-8">
-              As a seasoned HR professional, I blend traditional human resource practices with innovative approaches to create meaningful workplace experiences. My passion lies in developing people-first strategies that drive both individual and organizational success.
+            As an experienced HR professional, I seamlessly blend traditional human resource methodologies with forward-thinking, innovative approaches to cultivate meaningful workplace experiences. My passion lies in crafting people-first strategies that foster growth, empower teams, and drive both individual and organizational success.
             </p>
-
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {traits.map((trait, index) => (
                 <motion.div

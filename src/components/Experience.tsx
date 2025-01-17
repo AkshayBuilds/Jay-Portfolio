@@ -1,35 +1,28 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Award, BookOpen, Briefcase, GraduationCap } from 'lucide-react';
+import { Award, BookOpen, Briefcase } from 'lucide-react';
 
 const experiences = [
   {
-    year: '2023',
-    title: 'Senior HR Director',
-    company: 'Tech Innovations Inc.',
-    description: 'Led global HR initiatives and digital transformation',
+    year: '2024',
+    title: 'Executive Search Consultant ',
+    company: 'HIRINGCRAFT CONSULTING LLP',
+    description: 'An executive search firm managed by specialists with deep experience in top team building.',
     icon: Briefcase,
   },
   {
-    year: '2021',
-    title: 'HR Manager',
-    company: 'Future Corp',
-    description: 'Implemented innovative talent acquisition strategies',
+    year: '2022',
+    title: 'Talent Acquisition Executive',
+    company: 'Hidden Brains InfoTech',
+    description: 'In addition to my data mining role, I took on key responsibilities in talent acquisition',
     icon: Award,
   },
   {
-    year: '2019',
-    title: 'HR Business Partner',
-    company: 'Global Solutions',
-    description: 'Drove employee engagement and culture initiatives',
+    year: '2021',
+    title: 'Data Mining Executive',
+    company: 'Hidden Brains InfoTech',
+    description: 'recruitment team by using my data research skills to find thetop talents',
     icon: BookOpen,
-  },
-  {
-    year: '2017',
-    title: 'HR Certification',
-    company: 'SHRM',
-    description: 'Senior Professional in Human Resources',
-    icon: GraduationCap,
   },
 ];
 
