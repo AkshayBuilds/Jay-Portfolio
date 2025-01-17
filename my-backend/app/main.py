@@ -22,7 +22,7 @@ class ContactForm(BaseModel):
     email: EmailStr
     message: str
 
-@app.get("/hello")
+@app.get("/")
 def read_root():
     return {"message": "hello from akshay"}
 
