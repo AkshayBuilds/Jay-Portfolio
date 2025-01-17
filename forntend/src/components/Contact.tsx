@@ -28,7 +28,7 @@ export const Contact = () => {
     setMessage('');
 
     try {
-      const response = await fetch('https://jay-backend.vercel.app//api/Contact', {
+      const response = await fetch('https://jay-backend.vercel.app/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
