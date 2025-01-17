@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Mail, Linkedin, Phone, Instagram, MessageCircle } from 'lucide-react';
@@ -7,9 +8,53 @@ export const Contact = () => {
     triggerOnce: true,
     threshold: 0.1,
   });
+  
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+    
+    const data = {
+      name: formData.get('name'),
+      mobile: formData.get('mobile'),
+      email: formData.get('email'),
+      message: formData.get('message'),
+    };
+
+    setLoading(true);
+    setMessage('');
+
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/Contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+      console.log('Response:', result);
+
+      if (response.ok) {
+        setMessage(result.message);
+        form.reset();
+      } else {
+        throw new Error(result.message || 'Failed to send message');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setMessage(error instanceof Error ? error.message : 'An error occurred while sending the message');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <section ref={ref} id="contact" className="min-h-screen bg-black py-20 px-4">
+    <section ref={ref} id="Contact" className="min-h-screen bg-black py-20 px-4">
       <div className="max-w-4xl mx-auto">
         <motion.h2
           className="text-4xl font-bold text-center mb-16"
@@ -27,13 +72,15 @@ export const Contact = () => {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8 }}
           >
-            <form className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label className="block text-sm font-medium text-gray-400 mb-2">
                   Name
                 </label>
                 <input
+                  name="name"
                   type="text"
+                  required
                   className="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent transition-shadow"
                   placeholder="Your name"
                 />
@@ -44,7 +91,8 @@ export const Contact = () => {
                 </label>
                 <input
                   type="tel"
-                  pattern="[0-9]{10}"
+                  name="mobile" 
+                  required
                   className="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent transition-shadow"
                   placeholder="Your mobile number"
                 />
@@ -54,7 +102,9 @@ export const Contact = () => {
                   Email
                 </label>
                 <input
+                  name="email"
                   type="email"
+                  required
                   className="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent transition-shadow"
                   placeholder="your@email.com"
                 />
@@ -64,7 +114,9 @@ export const Contact = () => {
                   Message
                 </label>
                 <textarea
+                  name="message"
                   rows={4}
+                  required
                   className="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent transition-shadow"
                   placeholder="Your message..."
                 />
@@ -73,9 +125,15 @@ export const Contact = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="w-full py-3 px-6 bg-white text-black rounded-lg font-medium hover:bg-gray-200 transition-colors"
+                disabled={loading}
               >
-                Send Message
+                {loading ? (
+                  <span>Sending...</span>
+                ) : (
+                  <span>Send Message</span>
+                )}
               </motion.button>
+              {message && <p className="text-center text-gray-400">{message}</p>}
             </form>
           </motion.div>
 

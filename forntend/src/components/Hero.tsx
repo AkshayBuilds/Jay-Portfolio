@@ -162,7 +162,10 @@ export const Hero = () => {
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 1, duration: 0.8 }}
         >
-          <button className="group relative px-8 py-3 text-lg font-semibold rounded-full bg-gradient-to-r from-gray-300 to-white text-black hover:scale-105 hover:shadow-2xl transition-all overflow-hidden">
+          <a 
+            href="about"
+            className="group relative px-8 py-3 text-lg font-semibold rounded-full bg-gradient-to-r from-gray-300 to-white text-black hover:scale-105 hover:shadow-2xl transition-all overflow-hidden cursor-pointer"
+          >
             <span className="relative z-10">Explore My World</span>
             <motion.div
               className="absolute inset-0 bg-gradient-to-r from-white via-gray-300 to-white"
@@ -170,7 +173,7 @@ export const Hero = () => {
               whileHover={{ x: "-100%" }}
               transition={{ duration: 0.5 }}
             />
-          </button>
+          </a>
 
           <motion.button
             onClick={handleDownload}
