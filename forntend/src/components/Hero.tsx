@@ -163,7 +163,7 @@ export const Hero = () => {
           transition={{ delay: 1, duration: 0.8 }}
         >
           <a 
-            href="about"
+            href="#about"
             className="group relative px-8 py-3 text-lg font-semibold rounded-full bg-gradient-to-r from-gray-300 to-white text-black hover:scale-105 hover:shadow-2xl transition-all overflow-hidden cursor-pointer"
           >
             <span className="relative z-10">Explore My World</span>
