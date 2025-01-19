@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Download } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const navItems = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
+  { label: "Projects", href: "#projects" },
   { label: "Experience", href: "#experience" },
   { label: "Services", href: "#services" },
   { label: "Contact", href: "#Contact" },
@@ -104,16 +105,6 @@ export const Navbar = () => {
     };
   }, []);
 
-  const handleDownload = () => {
-    const fileUrl = '/JayPrajapatiCV.pdf';
-    const link = document.createElement('a');
-    link.href = fileUrl;
-    link.download = 'Jay_Prajapati_Resume.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   return (
     <>
       <motion.nav
@@ -130,9 +121,9 @@ export const Navbar = () => {
           <div className="flex items-center justify-between h-16 ">
             <Logo />
 
-            {/* Desktop Navigation with Download Button */}
+            {/* Desktop Navigation - Remove Download Button */}
             <div className="hidden md:flex items-center">
-              <div className="flex space-x-8 mr-6">
+              <div className="flex space-x-8">
                 {navItems.map((item) => (
                   <motion.a
                     key={item.label}
@@ -155,31 +146,10 @@ export const Navbar = () => {
                   </motion.a>
                 ))}
               </div>
-
-              <motion.button
-                onClick={handleDownload}
-                className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 
-                  border border-white/10 hover:border-white/30 transition-all duration-300"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Download className="w-4 h-4" />
-                <span className="text-sm font-medium">Resume</span>
-              </motion.button>
             </div>
 
-            {/* Mobile Menu Button and Download Button */}
-            <div className="md:hidden flex items-center gap-4">
-              <motion.button
-                onClick={handleDownload}
-                className="flex items-center gap-2 px-3 py-2 rounded-full bg-white/10 hover:bg-white/20 
-                  border border-white/10 hover:border-white/30 transition-all duration-300"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Download className="w-4 h-4" />
-              </motion.button>
-
+            {/* Mobile Menu Button - Remove Download Button */}
+            <div className="md:hidden">
               <motion.button
                 className="text-white"
                 whileTap={{ scale: 0.9 }}

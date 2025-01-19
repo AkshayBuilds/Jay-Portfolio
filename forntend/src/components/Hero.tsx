@@ -17,17 +17,6 @@ export const Hero = () => {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  const handleDownload = () => {
-    // Replace 'Jay_Prajapati_Resume.pdf' with your actual resume file name
-    const fileUrl = '/JayPrajapatiCV.pdf';
-    const link = document.createElement('a');
-    link.href = fileUrl;
-    link.download = 'Jay_Prajapati_Resume.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   return (
     <motion.section
       id="home"
@@ -143,7 +132,7 @@ export const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 1 }}
           >
-            Crafting Careers, Building Connections
+            Global Executive Search | Specializing in CXO & Leadership Hiring
           </motion.p>
           
           {/* Floating sparkles */}
@@ -157,47 +146,19 @@ export const Hero = () => {
         </motion.div>
 
         <motion.div
-          className="relative flex flex-col sm:flex-row items-center justify-center gap-4"
+          className="relative"
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 1, duration: 0.8 }}
         >
           <a 
             href="#about"
-            className="group relative px-8 py-3 text-lg font-semibold rounded-full bg-gradient-to-r from-gray-300 to-white text-black hover:scale-105 hover:shadow-2xl transition-all overflow-hidden cursor-pointer"
+            className="inline-block px-8 py-3 text-lg font-semibold rounded-full bg-gradient-to-r from-gray-300 to-white text-black hover:scale-105 hover:shadow-2xl transition-all cursor-pointer"
           >
-            <span className="relative z-10">Explore My World</span>
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-white via-gray-300 to-white"
-              initial={{ x: "100%" }}
-              whileHover={{ x: "-100%" }}
-              transition={{ duration: 0.5 }}
-            />
+            Explore My World
           </a>
-
-          <motion.button
-            onClick={handleDownload}
-            className="group relative px-8 py-3 text-lg font-semibold rounded-full border-2 border-white/30 text-white hover:scale-105 hover:shadow-2xl transition-all overflow-hidden"
-            whileHover={{ 
-              backgroundColor: "rgba(255, 255, 255, 0.1)",
-              borderColor: "rgba(255, 255, 255, 0.5)"
-            }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <span className="relative z-10 flex items-center gap-2">
-              Download CV
-              <motion.span
-                initial={{ y: 0 }}
-                animate={{ y: [0, -3, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              >
-                ↓
-              </motion.span>
-            </span>
-          </motion.button>
         </motion.div>
       </div>
-
       {/* Scroll indicator with enhanced animation */}
       <motion.div
         className="absolute bottom-10 z-10 flex flex-col items-center justify-center gap-2"

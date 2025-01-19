@@ -5,6 +5,7 @@ import { Experience } from './components/Experience';
 import { Services } from './components/Services';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
+import { Projects } from './components/Projects';
 import './styles/globals.css';
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
       <Navbar />
       <Hero />
       <About />
+      <Projects/>
       <Experience />
       <Services />
       <Contact />

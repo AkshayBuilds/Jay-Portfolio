@@ -34,7 +34,7 @@ export const About = () => {
             {/* Image Container */}
             <div className="relative">
               <img
-                src="/Jay.jpeg"
+                src="/jay.jpg"
                 alt="Jay Prajapati"
                 className="rounded-lg shadow-2xl transition-transform duration-500 group-hover:scale-[1.02]"
               />
