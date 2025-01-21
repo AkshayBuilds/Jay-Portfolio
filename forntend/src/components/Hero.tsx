@@ -108,12 +108,25 @@ export const Hero = () => {
 
         <div className="relative">
           <motion.h1
-            className="text-6xl md:text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 drop-shadow-lg mb-6"
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
+            className="text-6xl md:text-8xl font-extrabold mb-6 text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
           >
-            Jay Prajapati
+            <motion.span
+              className="inline-block relative"
+              initial={{ y: 20 }}
+              animate={{ y: 0 }}
+              transition={{ 
+                type: "spring",
+                stiffness: 100,
+                delay: 0.2 
+              }}
+            >
+              <span className="relative inline-block text-transparent bg-clip-text bg-[linear-gradient(to_right,theme(colors.gray.400),theme(colors.white),theme(colors.gray.400),theme(colors.white))] animate-shine">
+                Jay Prajapati
+              </span>
+            </motion.span>
           </motion.h1>
           
           {/* Animated underline */}
@@ -186,3 +199,29 @@ export const Hero = () => {
     </motion.section>
   );
 };
+
+<style>
+  {`
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .animate-gradient {
+      background-size: 200% auto;
+      animation: gradient 4s linear infinite;
+    }
+    .animate-shine {
+      background-size: 200% auto;
+      animation: shine 3s linear infinite;
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+    
+    @keyframes shine {
+      to {
+        background-position: 200% center;
+      }
+    }
+  `}
+</style>
