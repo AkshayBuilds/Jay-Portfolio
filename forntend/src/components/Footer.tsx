@@ -47,6 +47,18 @@ export const Footer = () => {
 
   return (
     <footer ref={ref} className="bg-black py-8 sm:py-12 px-4 relative overflow-hidden">
+      {/* Animated line */}
+      <motion.div
+        className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/50 to-transparent"
+        initial={{ x: '-100%', opacity: 0 }}
+        animate={inView ? { x: '100%', opacity: 1 } : {}}
+        transition={{ 
+          duration: 2, 
+          repeat: Infinity,
+          ease: "linear"
+        }}
+      />
+
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-12 text-center md:text-left">
           {/* First Column */}
