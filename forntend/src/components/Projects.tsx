@@ -63,19 +63,25 @@ const allProjects: Project[] = [
 const projectsAnimation = {
   hidden: { 
     opacity: 0,
-    y: 20,
-    height: 0
+    y: 50,
+    transition: {
+      duration: 0.3,
+      ease: "easeInOut"
+    }
   },
   visible: { 
     opacity: 1,
     y: 0,
-    height: "auto"
+    transition: {
+      duration: 0.3,
+      ease: "easeInOut"
+    }
   }
 };
 
 export const Projects = () => {
   const [showAll, setShowAll] = useState(false);
-  const displayedProjects = showAll ? allProjects : allProjects.slice(0, 4);
+  const displayedProjects = showAll ? allProjects.slice(0, 6) : allProjects.slice(0, 4);
 
   return (
     <section id="projects" className="py-20 bg-gradient-to-b from-black to-gray-900">
@@ -97,138 +103,44 @@ export const Projects = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {displayedProjects.map((project, index) => (
-            <motion.div
-              key={index}
-              className="p-6 bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl border border-gray-700 hover:border-gray-500 transition-all duration-300"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ y: -5, scale: 1.02 }}
-            >
-              <div className="flex flex-col h-full">
-                <h3 className="text-xl font-bold mb-3 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                  {project.title}
-                </h3>
-                <p className="text-gray-400 mb-4 flex-grow">
-                  {project.description}
-                </p>
-                <div className="space-y-4">
-                  <div className="bg-gray-800/50 p-3 rounded-lg">
-                    <p className="text-green-400 font-semibold">Impact:</p>
-                    <p className="text-gray-300">{project.impact}</p>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((tech, techIndex) => (
-                      <span
-                        key={techIndex}
-                        className="px-3 py-1 text-sm bg-gray-800 rounded-full text-gray-300 border border-gray-600"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="flex gap-4 pt-2">
-                    {project.liveUrl && (
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors"
-                      >
-                        View Project →
-                      </a>
-                    )}
-                    {project.caseStudyUrl && (
-                      <a
-                        href={project.caseStudyUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm font-medium text-gray-400 hover:text-white transition-colors"
-                      >
-                        Read Case Study →
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-          
           <AnimatePresence mode="wait">
-            {showAll && (
-              <motion.div 
-                className="grid grid-cols-1 md:grid-cols-2 gap-6 col-span-full"
+            {displayedProjects.map((project, index) => (
+              <motion.div
+                key={index}
+                className="p-6 bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl border border-gray-700 hover:border-gray-500 transition-all duration-300"
                 initial="hidden"
                 animate="visible"
                 exit="hidden"
                 variants={projectsAnimation}
-                transition={{ 
-                  duration: 0.4,
-                  ease: "easeInOut"
-                }}
+                custom={index}
+                whileHover={{ y: -5, scale: 1.02 }}
               >
-                {allProjects.slice(4).map((project, index) => (
-                  <motion.div
-                    key={index}
-                    className="p-6 bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl border border-gray-700 hover:border-gray-500 transition-all duration-300"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    whileHover={{ y: -5, scale: 1.02 }}
-                  >
-                    <div className="flex flex-col h-full">
-                      <h3 className="text-xl font-bold mb-3 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                        {project.title}
-                      </h3>
-                      <p className="text-gray-400 mb-4 flex-grow">
-                        {project.description}
-                      </p>
-                      <div className="space-y-4">
-                        <div className="bg-gray-800/50 p-3 rounded-lg">
-                          <p className="text-green-400 font-semibold">Impact:</p>
-                          <p className="text-gray-300">{project.impact}</p>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          {project.technologies.map((tech, techIndex) => (
-                            <span
-                              key={techIndex}
-                              className="px-3 py-1 text-sm bg-gray-800 rounded-full text-gray-300 border border-gray-600"
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                        <div className="flex gap-4 pt-2">
-                          {project.liveUrl && (
-                            <a
-                              href={project.liveUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors"
-                            >
-                              View Project →
-                            </a>
-                          )}
-                          {project.caseStudyUrl && (
-                            <a
-                              href={project.caseStudyUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-sm font-medium text-gray-400 hover:text-white transition-colors"
-                            >
-                              Read Case Study →
-                            </a>
-                          )}
-                        </div>
-                      </div>
+                <div className="flex flex-col h-full">
+                  <h3 className="text-xl font-bold mb-3 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                    {project.title}
+                  </h3>
+                  <p className="text-gray-400 mb-4 flex-grow">
+                    {project.description}
+                  </p>
+                  <div className="space-y-4">
+                    <div className="bg-gray-800/50 p-3 rounded-lg">
+                      <p className="text-green-400 font-semibold">Impact:</p>
+                      <p className="text-gray-300">{project.impact}</p>
                     </div>
-                  </motion.div>
-                ))}
+                    <div className="flex flex-wrap gap-2">
+                      {project.technologies.map((tech, techIndex) => (
+                        <span
+                          key={techIndex}
+                          className="px-3 py-1 text-sm bg-gray-800 rounded-full text-gray-300 border border-gray-600"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </motion.div>
-            )}
+            ))}
           </AnimatePresence>
         </div>
 

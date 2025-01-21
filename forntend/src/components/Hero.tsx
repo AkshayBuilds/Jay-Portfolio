@@ -152,10 +152,10 @@ export const Hero = () => {
           transition={{ delay: 1, duration: 0.8 }}
         >
           <a 
-            href="#about"
+            href="#projects"
             className="inline-block px-8 py-3 text-lg font-semibold rounded-full bg-gradient-to-r from-gray-300 to-white text-black hover:scale-105 hover:shadow-2xl transition-all cursor-pointer"
           >
-            Explore My World
+            Explore My Work
           </a>
         </motion.div>
       </div>

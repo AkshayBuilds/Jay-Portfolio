@@ -131,7 +131,7 @@ export const Footer = () => {
               whileTap={{ scale: 0.95 }}
             >
               <Download className="w-4 h-4" />
-              <span className="text-sm font-medium">Download CV</span>
+              <span className="text-sm font-medium">My Profile</span>
             </motion.button>
           </motion.div>
         </div>
