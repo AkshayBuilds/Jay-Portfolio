@@ -18,9 +18,8 @@ const Logo = () => (
     whileHover={{ scale: 1.05 }}
     whileTap={{ scale: 0.95 }}
   >
-    {/* Logo Icon */}
     <motion.div
-      className="relative w-8 h-8 bg-gradient-to-br from-white to-gray-400 rounded-lg overflow-hidden cursor-pointer"
+      className="relative w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-white to-gray-400 rounded-lg overflow-hidden"
       whileHover={{ rotate: 360 }}
       transition={{ duration: 0.8, ease: "easeInOut" }}
     >
@@ -28,18 +27,17 @@ const Logo = () => (
         className="absolute inset-0.5 bg-black rounded-lg flex items-center justify-center"
         whileHover={{ scale: 0.85 }}
       >
-        <span className="text-lg font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+        <span className="text-base sm:text-lg font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
           J
         </span>
       </motion.div>
     </motion.div>
 
-    {/* Logo Text */}
-    <div className="flex flex-col cursor-pointer">
-      <span className="text-xl font-extrabold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent leading-none">
+    <div className="flex flex-col">
+      <span className="text-lg sm:text-xl font-extrabold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent leading-none">
         Jay
       </span>
-      <span className="text-sm text-gray-400 font-medium tracking-wider group-hover:text-white transition-colors">
+      <span className="text-xs sm:text-sm text-gray-400 font-medium tracking-wider group-hover:text-white transition-colors">
         PRAJAPATI
       </span>
     </div>
@@ -165,24 +163,34 @@ export const Navbar = () => {
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
-              className="absolute top-16 left-0 w-full bg-black/95 backdrop-blur-lg md:hidden"
+              className="absolute top-16 left-0 w-full bg-gradient-to-b from-black via-gray-900/95 to-black/95 backdrop-blur-lg md:hidden border-t border-gray-800"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="px-6 py-4 space-y-4">
+              <div className="px-6 py-8 space-y-6">
                 {navItems.map((item) => (
                   <motion.a
                     key={item.label}
                     href={item.href}
-                    className={`block text-lg font-semibold text-gray-300 hover:text-white transition-all ${
-                      activeSection === item.href.substring(1) ? "text-white" : ""
+                    className={`block text-base font-semibold transition-all relative ${
+                      activeSection === item.href.substring(1) 
+                        ? "text-white" 
+                        : "text-gray-400 hover:text-white"
                     }`}
                     whileHover={{ x: 10 }}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    {item.label}
+                    <div className="flex items-center justify-between">
+                      <span>{item.label}</span>
+                      {activeSection === item.href.substring(1) && (
+                        <motion.div
+                          className="w-1.5 h-1.5 rounded-full bg-white"
+                          layoutId="mobileActiveSection"
+                        />
+                      )}
+                    </div>
                   </motion.a>
                 ))}
               </div>
@@ -195,7 +203,7 @@ export const Navbar = () => {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            className="fixed inset-0 bg-black/50 z-40 md:hidden"
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 md:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

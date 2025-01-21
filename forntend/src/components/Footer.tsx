@@ -46,17 +46,9 @@ export const Footer = () => {
   };
 
   return (
-    <footer ref={ref} className="bg-black py-12 px-4 relative overflow-hidden">
-      {/* Animated line */}
-      <motion.div
-        className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white to-transparent"
-        initial={{ x: '-100%' }}
-        animate={inView ? { x: '100%' } : {}}
-        transition={{ duration: 2, repeat: Infinity }}
-      />
-
+    <footer ref={ref} className="bg-black py-8 sm:py-12 px-4 relative overflow-hidden">
       <div className="max-w-6xl mx-auto">
-        <div className="grid md:grid-cols-3 gap-12 text-center md:text-left">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-12 text-center md:text-left">
           {/* First Column */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -64,13 +56,13 @@ export const Footer = () => {
             transition={{ duration: 0.8 }}
             className="flex flex-col items-center md:items-start"
           >
-            <h3 className="text-xl font-bold mb-4">Jay Prajapati</h3>
-            <p className="text-gray-400 mb-6">
+            <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Jay Prajapati</h3>
+            <p className="text-gray-400 mb-4 sm:mb-6 text-sm sm:text-base">
               Transforming HR practices with innovation and empathy
             </p>
             
             {/* Social Icons */}
-            <div className="flex space-x-4">
+            <div className="flex space-x-3 sm:space-x-4">
               {socialLinks.map((social, index) => (
                 <motion.a
                   key={social.label}
@@ -82,10 +74,10 @@ export const Footer = () => {
                     hover:border-transparent hover:scale-110`}
                   initial={{ opacity: 0, y: 20 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.8, delay: index * 0.2 }}
+                  transition={{ duration: 0.8, delay: index * 0.1 }}
                   whileHover={{ y: -3 }}
                 >
-                  <social.icon className="w-5 h-5" />
+                  <social.icon className="w-4 h-4 sm:w-5 sm:h-5" />
                 </motion.a>
               ))}
             </div>
@@ -98,16 +90,18 @@ export const Footer = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="space-y-2"
           >
-            <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
-            {['About', 'Services', 'Experience', 'Contact'].map((link) => (
-              <a
-                key={link}
-                href={`#${link.toLowerCase()}`}
-                className="block text-gray-400 hover:text-white transition-colors"
-              >
-                {link}
-              </a>
-            ))}
+            <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Quick Links</h4>
+            <div className="flex flex-col space-y-2">
+              {['About', 'Services', 'Experience', 'Contact'].map((link) => (
+                <a
+                  key={link}
+                  href={`#${link.toLowerCase()}`}
+                  className="text-gray-400 hover:text-white transition-colors text-sm sm:text-base"
+                >
+                  {link}
+                </a>
+              ))}
+            </div>
           </motion.div>
 
           {/* Let's Connect */}
@@ -117,15 +111,15 @@ export const Footer = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="flex flex-col items-center md:items-start"
           >
-            <h4 className="text-lg font-semibold mb-4">Let's Connect</h4>
-            <p className="text-gray-400 mb-6">
+            <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Let's Connect</h4>
+            <p className="text-gray-400 mb-4 sm:mb-6 text-sm sm:text-base">
               Stay updated with the latest HR insights and updates.
             </p>
 
             {/* Download CV Button */}
             <motion.button
               onClick={handleDownload}
-              className="flex items-center gap-2 px-6 py-2 rounded-lg bg-white/10 hover:bg-white/20 
+              className="flex items-center gap-2 px-4 sm:px-6 py-2 rounded-lg bg-white/10 hover:bg-white/20 
                 border border-white/20 hover:border-white/40 transition-all duration-300"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -138,12 +132,12 @@ export const Footer = () => {
 
         {/* Copyright */}
         <motion.div
-          className="mt-12 pt-8 border-t border-gray-800 text-center text-gray-400"
+          className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-gray-800 text-center text-gray-400"
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <p>&copy; {new Date().getFullYear()} Jay Prajapati. All rights reserved.</p>
+          <p className="text-xs sm:text-sm">&copy; {new Date().getFullYear()} Jay Prajapati. All rights reserved.</p>
         </motion.div>
       </div>
     </footer>

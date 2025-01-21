@@ -87,7 +87,7 @@ export const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center px-6">
+      <div className="relative z-10 text-center px-4 sm:px-6">
         {/* Sparkle effect */}
         <motion.div
           className="absolute -inset-10 opacity-30"
@@ -108,7 +108,7 @@ export const Hero = () => {
 
         <div className="relative">
           <motion.h1
-            className="text-6xl md:text-8xl font-extrabold mb-6 text-center"
+            className="text-4xl sm:text-6xl md:text-8xl font-extrabold mb-4 sm:mb-6 text-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
@@ -140,7 +140,7 @@ export const Hero = () => {
 
         <motion.div className="relative inline-block">
           <motion.p
-            className="text-xl md:text-2xl text-gray-300 drop-shadow-md mb-10"
+            className="text-lg sm:text-xl md:text-2xl text-gray-300 drop-shadow-md mb-6 sm:mb-10 max-w-[90%] mx-auto"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 1 }}
@@ -166,7 +166,7 @@ export const Hero = () => {
         >
           <a 
             href="#projects"
-            className="inline-block px-8 py-3 text-lg font-semibold rounded-full bg-gradient-to-r from-gray-300 to-white text-black hover:scale-105 hover:shadow-2xl transition-all cursor-pointer"
+            className="inline-block px-6 sm:px-8 py-2.5 sm:py-3 text-base sm:text-lg font-semibold rounded-full bg-gradient-to-r from-gray-300 to-white text-black hover:scale-105 hover:shadow-2xl transition-all cursor-pointer"
           >
             Explore My Work
           </a>
@@ -174,18 +174,18 @@ export const Hero = () => {
       </div>
       {/* Scroll indicator with enhanced animation */}
       <motion.div
-        className="absolute bottom-10 z-10 flex flex-col items-center justify-center gap-2"
+        className="absolute bottom-6 sm:bottom-10 z-10 flex flex-col items-center justify-center gap-2 w-full"
         animate={{ y: [0, 15, 0] }}
         transition={{ duration: 1.5, repeat: Infinity }}
       >
         <motion.p
-          className="text-sm text-gray-400"
+          className="text-xs sm:text-sm text-gray-400"
           animate={{ opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 1.5, repeat: Infinity }}
         >
           Scroll to explore
         </motion.p>
-        <ChevronDown className="w-10 h-10 text-white opacity-60 hover:opacity-90 transition-opacity" />
+        <ChevronDown className="w-8 h-8 sm:w-10 sm:h-10 text-white opacity-60 hover:opacity-90 transition-opacity" />
       </motion.div>
 
       {/* Enhanced gradient overlay with noise texture */}

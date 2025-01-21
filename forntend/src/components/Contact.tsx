@@ -54,10 +54,10 @@ export const Contact = () => {
   };
 
   return (
-    <section ref={ref} id="Contact" className="min-h-screen bg-black py-20 px-4">
+    <section ref={ref} id="Contact" className="min-h-screen bg-black py-12 sm:py-20 px-4 overflow-hidden">
       <div className="max-w-4xl mx-auto">
         <motion.h2
-          className="text-4xl font-bold text-center mb-16"
+          className="text-3xl sm:text-4xl font-bold text-center mb-10 sm:mb-16"
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.8 }}
@@ -65,66 +65,66 @@ export const Contact = () => {
           Let's Connect
         </motion.h2>
 
-        <div className="grid md:grid-cols-2 gap-12">
+        <div className="grid md:grid-cols-2 gap-8 sm:gap-12">
           {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8 }}
           >
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-400 mb-2">
+                <label className="block text-sm font-medium text-gray-400 mb-1.5 sm:mb-2">
                   Name
                 </label>
                 <input
                   name="name"
                   type="text"
                   required
-                  className="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent transition-shadow"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-900 border border-gray-800 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent transition-shadow text-sm sm:text-base"
                   placeholder="Your name"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-400 mb-2">
+                <label className="block text-sm font-medium text-gray-400 mb-1.5 sm:mb-2">
                   Mobile Number
                 </label>
                 <input
                   type="tel"
                   name="mobile" 
                   required
-                  className="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent transition-shadow"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-900 border border-gray-800 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent transition-shadow text-sm sm:text-base"
                   placeholder="Your mobile number"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-400 mb-2">
+                <label className="block text-sm font-medium text-gray-400 mb-1.5 sm:mb-2">
                   Email
                 </label>
                 <input
                   name="email"
                   type="email"
                   required
-                  className="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent transition-shadow"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-900 border border-gray-800 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent transition-shadow text-sm sm:text-base"
                   placeholder="your@email.com"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-400 mb-2">
+                <label className="block text-sm font-medium text-gray-400 mb-1.5 sm:mb-2">
                   Message
                 </label>
                 <textarea
                   name="message"
                   rows={4}
                   required
-                  className="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent transition-shadow"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-gray-900 border border-gray-800 rounded-lg focus:ring-2 focus:ring-white focus:border-transparent transition-shadow text-sm sm:text-base"
                   placeholder="Your message..."
                 />
               </div>
               <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-full py-3 px-6 bg-white text-black rounded-lg font-medium hover:bg-gray-200 transition-colors"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full py-2.5 sm:py-3 px-4 sm:px-6 bg-white text-black rounded-lg font-medium hover:bg-gray-200 transition-colors text-sm sm:text-base"
                 disabled={loading}
               >
                 {loading ? (
@@ -133,7 +133,9 @@ export const Contact = () => {
                   <span>Send Message</span>
                 )}
               </motion.button>
-              {message && <p className="text-center text-gray-400">{message}</p>}
+              {message && (
+                <p className="text-center text-gray-400 text-sm sm:text-base">{message}</p>
+              )}
             </form>
           </motion.div>
 
@@ -142,17 +144,17 @@ export const Contact = () => {
             initial={{ opacity: 0, x: 50 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className="space-y-8"
+            className="space-y-6 sm:space-y-8"
           >
             <div>
-              <h3 className="text-2xl font-bold mb-6">Get in Touch</h3>
-              <p className="text-gray-400 mb-8">
+              <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Get in Touch</h3>
+              <p className="text-gray-400 mb-6 sm:mb-8 text-sm sm:text-base">
                 Ready to transform your HR practices? Let's discuss how we can work together
                 to achieve your goals.
               </p>
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               {[
                 { 
                   icon: Mail, 
@@ -189,10 +191,10 @@ export const Contact = () => {
                   key={index}
                   href={item.href}
                   target='_blank'
-                  className={`flex items-center space-x-4 text-gray-400 ${item.hoverColor} transition-colors`}
+                  className={`flex items-center space-x-3 sm:space-x-4 text-gray-400 ${item.hoverColor} transition-colors text-sm sm:text-base`}
                   whileHover={{ x: 10 }}
                 >
-                  <item.icon className="w-6 h-6" />
+                  <item.icon className="w-5 h-5 sm:w-6 sm:h-6" />
                   <span>{item.text}</span>
                 </motion.a>
               ))}
