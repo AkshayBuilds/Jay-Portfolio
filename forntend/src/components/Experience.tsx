@@ -31,11 +31,14 @@ const experiences = [
       </>
     ),
     icon: () => (
-      <img
-        src="/hclogo.png"
-        alt="HiringCraft Logo"
-        className="w-9 h-9 object-contain"
-      />
+      <div className="flex items-center justify-center w-14 h-14 bg-white rounded-lg p-1.5 shadow-lg hover:scale-105 transition-transform duration-300">
+        <img
+          src="/hclogo.png"
+          alt="HiringCraft Logo"
+          className="w-11 h-11 object-contain"
+          style={{ objectFit: 'contain', imageRendering: 'crisp-edges' }}
+        />
+      </div>
     ),
     media: [
       {
@@ -79,11 +82,14 @@ const experiences = [
       </>
     ),
     icon: () => (
-      <img
-        src="/hblogo.png"
-        alt="Hidden Brains Logo"
-        className="w-9 h-9 object-contain"
-      />
+      <div className="flex items-center justify-center w-14 h-14 bg-white rounded-lg p-1.5 shadow-lg hover:scale-105 transition-transform duration-300">
+        <img
+          src="/hblogo.png"
+          alt="Hidden Brains Logo"
+          className="w-11 h-11 object-contain"
+          style={{ objectFit: 'contain', imageRendering: 'crisp-edges' }}
+        />
+      </div>
     ),
     media: [
       {
@@ -147,7 +153,7 @@ export const Experience = () => {
               >
                 <div className="bg-gray-900 rounded-xl p-4 sm:p-8 border border-gray-800">
                   <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-                    <div className="bg-white/10 rounded-lg p-3 self-start">
+                    <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg p-2.5 self-start shadow-xl">
                       <exp.icon />
                     </div>
                     
