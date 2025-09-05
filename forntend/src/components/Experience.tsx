@@ -47,9 +47,19 @@ const experiences = [
         imageUrl: "/hcm.png",
       },
       {
-        title: "Thrilled to have participated in the 'Social Media Techniques and Use for Business Development' workshop hosted by the Ahmedabad Management Association (AMA).",
-        description: "It was an incredible experience, filled with insightful discussions and practical strategies on leveraging social media for business growth. A big thank you to the facilitator, Mr. Deepak Bhatt, and all the amazing professionals I had the chance to learn from and collaborate with.\n\n Looking forward to applying these strategies to drive engagement, strengthen brand awareness, and foster deeper connections within the talent acquisition space!",
-        imageUrl: "/hcm2.png",
+        title: "AI-Driven Productivity Training for Business Leaders",
+        description: "Conducted two executive training programs on 'AI for Everyday Office Productivity' at Ahmedabad Management Association. The sessions were designed for CXOs, managers, and professionals to explore how AI can transform workplace productivity.",
+        imageUrl: "/1.png",
+      },  
+      {
+        title: "Assistant Faculty – AI for Productivity Workshop'",
+        description: "Served as Assistant Faculty for the executive training program on 'AI for Everyday Office Productivity' at Ahmedabad Management Association (Batch 2).\nThe session enabled professionals to explore how AI can be applied to real workplace challenges.",
+        imageUrl: "/3.png",
+      },
+      {
+        title: "Ahmedabad Management Association: AI Training for Leaders",
+        description: "Conducted an executive workshop on 'AI for Everyday Office Productivity' at Ahmedabad Management Association\n This program was uniquely designed around business case studies, ensuring that participants could directly connect AI applications with their industry-specific challenges.",
+        imageUrl: "/4.png",
       },
     ],
   },
