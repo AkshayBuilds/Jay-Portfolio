@@ -1,6 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { X } from 'lucide-react';
 import { useState } from 'react';
 
 const experiences = [
@@ -124,19 +123,26 @@ export const Experience = () => {
   });
 
   const [showMoreIndex, setShowMoreIndex] = useState<number | null>(null);
-  const [currentExperience, setCurrentExperience] = useState(0);
-  const [showMedia, setShowMedia] = useState(false);
-  const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
+  const [mediaIndices, setMediaIndices] = useState<number[]>(
+    experiences.map(() => 0)
+  );
 
-  const handleNext = () => {
-    const currentExp = experiences[currentExperience];
-    setCurrentMediaIndex((prev) =>
-      prev < (currentExp.media?.length || 1) - 1 ? prev + 1 : prev
-    );
+  const handleNext = (expIndex: number) => {
+    const mediaLength = experiences[expIndex].media?.length || 0;
+    if (mediaLength === 0) return;
+    setMediaIndices((prev) => {
+      const next = [...prev];
+      next[expIndex] = Math.min(next[expIndex] + 1, mediaLength - 1);
+      return next;
+    });
   };
 
-  const handlePrevious = () => {
-    setCurrentMediaIndex((prev) => (prev > 0 ? prev - 1 : prev));
+  const handlePrevious = (expIndex: number) => {
+    setMediaIndices((prev) => {
+      const next = [...prev];
+      next[expIndex] = Math.max(next[expIndex] - 1, 0);
+      return next;
+    });
   };
 
   return (
@@ -196,34 +202,6 @@ export const Experience = () => {
                       </div>
 
                       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mt-4">
-                        {exp.media && (
-                          <button
-                            onClick={() => {
-                              setCurrentExperience(index);
-                              setCurrentMediaIndex(0);
-                              setShowMedia(true);
-                            }}
-                            className="flex items-center gap-2 px-4 py-2 bg-blue-500/10 text-blue-400 rounded-full hover:bg-blue-500/20 transition-all duration-300 text-sm sm:text-base"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="16"
-                              height="16"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
-                              <circle cx="9" cy="9" r="2" />
-                              <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
-                            </svg>
-                            View Media
-                          </button>
-                        )}
-                        
                         {exp.expandedDescription && (
                           <button
                             onClick={() => setShowMoreIndex(showMoreIndex === index ? null : index)}
@@ -233,6 +211,64 @@ export const Experience = () => {
                           </button>
                         )}
                       </div>
+
+                      {exp.media && exp.media.length > 0 && (
+                        <div className="mt-6 bg-gray-900/70 rounded-xl border border-gray-800 overflow-hidden">
+                          <div className="relative w-full">
+                            {!exp.media[mediaIndices[index]].videoUrl ? (
+                              <div className="relative pt-[56.25%]">{/* 16:9 */}
+                                <img
+                                  src={exp.media[mediaIndices[index]].imageUrl}
+                                  alt={exp.media[mediaIndices[index]].title}
+                                  className="absolute inset-0 w-full h-full object-contain bg-black/40"
+                                />
+                              </div>
+                            ) : (
+                              <div className="relative pt-[56.25%]">{/* 16:9 */}
+                                <iframe
+                                  src={`https://www.youtube.com/embed/${(exp.media[mediaIndices[index]].videoUrl as string).split('v=')[1]?.split('&')[0]}?rel=0`}
+                                  title="Video"
+                                  frameBorder="0"
+                                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                  allowFullScreen
+                                  className="absolute inset-0 w-full h-full"
+                                />
+                              </div>
+                            )}
+                          </div>
+
+                          <div className="p-4 sm:p-6 border-t border-gray-800">
+                            <h4 className="text-base sm:text-lg font-semibold text-white">
+                              {exp.media[mediaIndices[index]].title}
+                            </h4>
+                            {exp.media[mediaIndices[index]].description && (
+                              <p className="text-gray-300 text-sm sm:text-base mt-2">
+                                {exp.media[mediaIndices[index]].description}
+                              </p>
+                            )}
+                          </div>
+
+                          <div className="flex items-center justify-between p-4 border-t border-gray-800 bg-gray-900/50">
+                            <button
+                              onClick={() => handlePrevious(index)}
+                              disabled={mediaIndices[index] === 0}
+                              className="px-3 sm:px-4 py-1.5 sm:py-2 bg-white/10 rounded-full text-white text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/20 transition-all duration-300"
+                            >
+                              Previous
+                            </button>
+                            <span className="text-white/80 font-medium text-sm">
+                              {mediaIndices[index] + 1} of {exp.media.length}
+                            </span>
+                            <button
+                              onClick={() => handleNext(index)}
+                              disabled={mediaIndices[index] === exp.media.length - 1}
+                              className="px-3 sm:px-4 py-1.5 sm:py-2 bg-white/10 rounded-full text-white text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/20 transition-all duration-300"
+                            >
+                              Next
+                            </button>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -241,95 +277,6 @@ export const Experience = () => {
           </div>
         </div>
       </section>
-
-      {/* Media Modal */}
-      <AnimatePresence>
-        {showMedia && experiences[currentExperience].media && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/95 z-50 overflow-y-auto touch-none"
-          >
-            <div className="min-h-screen px-4 py-16 flex items-center justify-center">
-              <div className="relative w-full max-w-4xl mx-auto">
-                {/* Close button */}
-                <div className="sticky top-0 flex justify-end mb-4">
-                  <button
-                    onClick={() => setShowMedia(false)}
-                    className="group flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full transition-all duration-300"
-                  >
-                    <span className="text-white/90 font-medium group-hover:text-white text-sm">Close</span>
-                    <X className="w-4 h-4 text-white/90 group-hover:text-white" />
-                  </button>
-                </div>
-
-                {/* Content Container */}
-                <div className="bg-gray-900/90 rounded-xl overflow-hidden backdrop-blur-sm">
-                  {/* Media Container */}
-                  <div className="relative w-full">
-                    {!experiences[currentExperience].media[currentMediaIndex].videoUrl ? (
-                      <div className="relative pt-[56.25%]"> {/* 16:9 Aspect Ratio */}
-                        <img
-                          src={experiences[currentExperience].media[currentMediaIndex].imageUrl}
-                          alt={experiences[currentExperience].media[currentMediaIndex].title}
-                          className="absolute inset-0 w-full h-full object-contain bg-black/40"
-                        />
-                      </div>
-                    ) : (
-                      <div className="relative pt-[56.25%]"> {/* 16:9 Aspect Ratio */}
-                        <iframe
-                          src="https://www.youtube.com/embed/HUleovD3BJU?si=g2KpEujQ018dQfrT"
-                          title="YouTube video player"
-                          frameBorder="0"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                          allowFullScreen
-                          className="absolute inset-0 w-full h-full"
-                        />
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Content Section */}
-                  <div className="p-4 sm:p-6 border-t border-gray-800">
-                    <h3 className="text-lg sm:text-xl font-bold mb-3 text-white">
-                      {experiences[currentExperience].media[currentMediaIndex].title}
-                    </h3>
-                    <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
-                      {experiences[currentExperience].media[currentMediaIndex].description}
-                    </p>
-                  </div>
-
-                  {/* Navigation Controls */}
-                  <div className="flex items-center justify-between p-4 border-t border-gray-800 bg-gray-900/50">
-                    <button
-                      onClick={handlePrevious}
-                      disabled={currentMediaIndex === 0}
-                      className="px-3 sm:px-4 py-1.5 sm:py-2 bg-white/10 rounded-full text-white text-sm
-                        disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/20 transition-all duration-300"
-                    >
-                      Previous
-                    </button>
-                    
-                    <span className="text-white/80 font-medium text-sm">
-                      {currentMediaIndex + 1} of {experiences[currentExperience].media.length}
-                    </span>
-                    
-                    <button
-                      onClick={handleNext}
-                      disabled={currentMediaIndex === experiences[currentExperience].media.length - 1}
-                      className="px-3 sm:px-4 py-1.5 sm:py-2 bg-white/10 rounded-full text-white text-sm
-                        disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/20 transition-all duration-300"
-                    >
-                      Next
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </>
   );
 };
