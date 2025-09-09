@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const experiences = [
   {
@@ -41,11 +41,6 @@ const experiences = [
     ),
     media: [
       {
-        title: "Attending the Program on 'Startup Ecosystem In India'",
-        description: "",
-        imageUrl: "/hcm.png",
-      },
-      {
         title: "AI-Driven Productivity Training for Business Leaders",
         description: "Conducted two executive training programs on 'AI for Everyday Office Productivity' at Ahmedabad Management Association. The sessions were designed for CXOs, managers, and professionals to explore how AI can transform workplace productivity.",
         imageUrl: "/1.png",
@@ -59,6 +54,16 @@ const experiences = [
         title: "Ahmedabad Management Association: AI Training for Leaders",
         description: "Conducted an executive workshop on 'AI for Everyday Office Productivity' at Ahmedabad Management Association\n This program was uniquely designed around business case studies, ensuring that participants could directly connect AI applications with their industry-specific challenges.",
         imageUrl: "/4.png",
+      },
+      {
+        title: "AI for Leaders: Practical Training Series (Batch 3)",
+        description: "Delivered the third executive training program on 'AI for Everyday Office Productivity' at Ahmedabad Management Association.This batch carried forward the success of earlier programs, helping a fresh group of professionals discover how AI can transform their daily workflows.",
+        imageUrl: "/Batch3.JPG",
+      },
+      {
+        title: "Attending the Program on 'Startup Ecosystem In India'",
+        description: "",
+        imageUrl: "/hcm.png",
       },
     ],
   },
@@ -132,18 +137,33 @@ export const Experience = () => {
     if (mediaLength === 0) return;
     setMediaIndices((prev) => {
       const next = [...prev];
-      next[expIndex] = Math.min(next[expIndex] + 1, mediaLength - 1);
+      next[expIndex] = (next[expIndex] + 1) % mediaLength;
       return next;
     });
   };
 
   const handlePrevious = (expIndex: number) => {
+    const mediaLength = experiences[expIndex].media?.length || 0;
+    if (mediaLength === 0) return;
     setMediaIndices((prev) => {
       const next = [...prev];
-      next[expIndex] = Math.max(next[expIndex] - 1, 0);
+      next[expIndex] = (next[expIndex] - 1 + mediaLength) % mediaLength;
       return next;
     });
   };
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setMediaIndices((prev) =>
+        prev.map((idx, expIndex) => {
+          const mediaLength = experiences[expIndex].media?.length || 0;
+          if (mediaLength === 0) return 0;
+          return (idx + 1) % mediaLength;
+        })
+      );
+    }, 3000);
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <>
@@ -215,26 +235,35 @@ export const Experience = () => {
                       {exp.media && exp.media.length > 0 && (
                         <div className="mt-6 bg-gray-900/70 rounded-xl border border-gray-800 overflow-hidden">
                           <div className="relative w-full">
-                            {!exp.media[mediaIndices[index]].videoUrl ? (
-                              <div className="relative pt-[56.25%]">{/* 16:9 */}
-                                <img
-                                  src={exp.media[mediaIndices[index]].imageUrl}
-                                  alt={exp.media[mediaIndices[index]].title}
-                                  className="absolute inset-0 w-full h-full object-contain bg-black/40"
-                                />
-                              </div>
-                            ) : (
-                              <div className="relative pt-[56.25%]">{/* 16:9 */}
-                                <iframe
-                                  src={`https://www.youtube.com/embed/${(exp.media[mediaIndices[index]].videoUrl as string).split('v=')[1]?.split('&')[0]}?rel=0`}
-                                  title="Video"
-                                  frameBorder="0"
-                                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                  allowFullScreen
-                                  className="absolute inset-0 w-full h-full"
-                                />
-                              </div>
-                            )}
+                            <div className="relative pt-[56.25%]">{/* 16:9 */}
+                              <AnimatePresence mode="wait">
+                                <motion.div
+                                  key={`${index}-${mediaIndices[index]}`}
+                                  initial={{ opacity: 0, x: 30 }}
+                                  animate={{ opacity: 1, x: 0 }}
+                                  exit={{ opacity: 0, x: -30 }}
+                                  transition={{ duration: 0.4, ease: 'easeInOut' }}
+                                  className="absolute inset-0"
+                                >
+                                  {!exp.media[mediaIndices[index]].videoUrl ? (
+                                    <img
+                                      src={exp.media[mediaIndices[index]].imageUrl}
+                                      alt={exp.media[mediaIndices[index]].title}
+                                      className="w-full h-full object-contain bg-black/40"
+                                    />
+                                  ) : (
+                                    <iframe
+                                      src={`https://www.youtube.com/embed/${(exp.media[mediaIndices[index]].videoUrl as string).split('v=')[1]?.split('&')[0]}?rel=0`}
+                                      title="Video"
+                                      frameBorder="0"
+                                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                      allowFullScreen
+                                      className="w-full h-full"
+                                    />
+                                  )}
+                                </motion.div>
+                              </AnimatePresence>
+                            </div>
                           </div>
 
                           <div className="p-4 sm:p-6 border-t border-gray-800">
@@ -251,8 +280,7 @@ export const Experience = () => {
                           <div className="flex items-center justify-between p-4 border-t border-gray-800 bg-gray-900/50">
                             <button
                               onClick={() => handlePrevious(index)}
-                              disabled={mediaIndices[index] === 0}
-                              className="px-3 sm:px-4 py-1.5 sm:py-2 bg-white/10 rounded-full text-white text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/20 transition-all duration-300"
+                              className="px-3 sm:px-4 py-1.5 sm:py-2 bg-white/10 rounded-full text-white text-sm hover:bg-white/20 transition-all duration-300"
                             >
                               Previous
                             </button>
@@ -261,8 +289,7 @@ export const Experience = () => {
                             </span>
                             <button
                               onClick={() => handleNext(index)}
-                              disabled={mediaIndices[index] === exp.media.length - 1}
-                              className="px-3 sm:px-4 py-1.5 sm:py-2 bg-white/10 rounded-full text-white text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/20 transition-all duration-300"
+                              className="px-3 sm:px-4 py-1.5 sm:py-2 bg-white/10 rounded-full text-white text-sm hover:bg-white/20 transition-all duration-300"
                             >
                               Next
                             </button>
