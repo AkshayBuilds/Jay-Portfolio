@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const experiences = [
   {
@@ -131,29 +131,22 @@ export const Experience = () => {
   const [mediaIndices, setMediaIndices] = useState<number[]>(
     experiences.map(() => 0)
   );
+  const [slideDirections, setSlideDirections] = useState<number[]>(
+    experiences.map(() => 1)
+  );
+  const autoplayRef = useRef<number | null>(null);
 
-  const handleNext = (expIndex: number) => {
-    const mediaLength = experiences[expIndex].media?.length || 0;
-    if (mediaLength === 0) return;
-    setMediaIndices((prev) => {
-      const next = [...prev];
-      next[expIndex] = (next[expIndex] + 1) % mediaLength;
-      return next;
-    });
+  const clearAutoplay = () => {
+    if (autoplayRef.current !== null) {
+      clearTimeout(autoplayRef.current);
+      autoplayRef.current = null;
+    }
   };
 
-  const handlePrevious = (expIndex: number) => {
-    const mediaLength = experiences[expIndex].media?.length || 0;
-    if (mediaLength === 0) return;
-    setMediaIndices((prev) => {
-      const next = [...prev];
-      next[expIndex] = (next[expIndex] - 1 + mediaLength) % mediaLength;
-      return next;
-    });
-  };
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
+  const scheduleAutoplay = () => {
+    clearAutoplay();
+    autoplayRef.current = window.setTimeout(() => {
+      setSlideDirections((prev) => prev.map(() => 1));
       setMediaIndices((prev) =>
         prev.map((idx, expIndex) => {
           const mediaLength = experiences[expIndex].media?.length || 0;
@@ -161,8 +154,45 @@ export const Experience = () => {
           return (idx + 1) % mediaLength;
         })
       );
+      scheduleAutoplay();
     }, 3000);
-    return () => clearInterval(intervalId);
+  };
+
+  const handleNext = (expIndex: number) => {
+    const mediaLength = experiences[expIndex].media?.length || 0;
+    if (mediaLength === 0) return;
+    setSlideDirections((prev) => {
+      const next = [...prev];
+      next[expIndex] = 1;
+      return next;
+    });
+    setMediaIndices((prev) => {
+      const next = [...prev];
+      next[expIndex] = (next[expIndex] + 1) % mediaLength;
+      return next;
+    });
+    scheduleAutoplay();
+  };
+
+  const handlePrevious = (expIndex: number) => {
+    const mediaLength = experiences[expIndex].media?.length || 0;
+    if (mediaLength === 0) return;
+    setSlideDirections((prev) => {
+      const next = [...prev];
+      next[expIndex] = -1;
+      return next;
+    });
+    setMediaIndices((prev) => {
+      const next = [...prev];
+      next[expIndex] = (next[expIndex] - 1 + mediaLength) % mediaLength;
+      return next;
+    });
+    scheduleAutoplay();
+  };
+
+  useEffect(() => {
+    scheduleAutoplay();
+    return () => clearAutoplay();
   }, []);
 
   return (
@@ -239,17 +269,31 @@ export const Experience = () => {
                               <AnimatePresence mode="wait">
                                 <motion.div
                                   key={`${index}-${mediaIndices[index]}`}
-                                  initial={{ opacity: 0, x: 30 }}
+                                  initial={{ opacity: 0, x: slideDirections[index] > 0 ? 60 : -60 }}
                                   animate={{ opacity: 1, x: 0 }}
-                                  exit={{ opacity: 0, x: -30 }}
-                                  transition={{ duration: 0.4, ease: 'easeInOut' }}
+                                  exit={{ opacity: 0, x: slideDirections[index] > 0 ? -60 : 60 }}
+                                  transition={{ duration: 0.45, ease: 'easeInOut' }}
                                   className="absolute inset-0"
+                                  drag="x"
+                                  dragConstraints={{ left: 0, right: 0 }}
+                                  dragElastic={0.2}
+                                  onDragEnd={(_, info) => {
+                                    const threshold = 60;
+                                    if (info.offset.x < -threshold) {
+                                      handleNext(index);
+                                    } else if (info.offset.x > threshold) {
+                                      handlePrevious(index);
+                                    } else {
+                                      // not enough swipe, simply restart autoplay timer
+                                      scheduleAutoplay();
+                                    }
+                                  }}
                                 >
                                   {!exp.media[mediaIndices[index]].videoUrl ? (
                                     <img
                                       src={exp.media[mediaIndices[index]].imageUrl}
                                       alt={exp.media[mediaIndices[index]].title}
-                                      className="w-full h-full object-contain bg-black/40"
+                                      className="w-full h-full object-cover bg-black"
                                     />
                                   ) : (
                                     <iframe
@@ -293,6 +337,29 @@ export const Experience = () => {
                             >
                               Next
                             </button>
+                          </div>
+
+                          <div className="flex items-center justify-center gap-2 p-4 border-t border-gray-800 bg-gray-900/40">
+                            {exp.media.map((_, dotIdx) => (
+                              <button
+                                key={dotIdx}
+                                onClick={() => {
+                                  setSlideDirections((prev) => {
+                                    const next = [...prev];
+                                    next[index] = dotIdx > mediaIndices[index] ? 1 : -1;
+                                    return next;
+                                  });
+                                  setMediaIndices((prev) => {
+                                    const next = [...prev];
+                                    next[index] = dotIdx;
+                                    return next;
+                                  });
+                                  scheduleAutoplay();
+                                }}
+                                className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${dotIdx === mediaIndices[index] ? 'bg-white w-6' : 'bg-white/30 hover:bg-white/60'}`}
+                                aria-label={`Go to slide ${dotIdx + 1}`}
+                              />
+                            ))}
                           </div>
                         </div>
                       )}
