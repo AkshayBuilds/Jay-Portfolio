@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 
 const experiences = [
   {
-    year: 'may 2024 - Present',
+    year: 'May 2024 - Present',
     title: 'Executive Search Consultant',
     company: (
       <a 
@@ -44,11 +44,6 @@ const experiences = [
         title: "AI-Driven Productivity Training for Business Leaders",
         description: "Conducted two executive training programs on 'AI for Everyday Office Productivity' at Ahmedabad Management Association. The sessions were designed for CXOs, managers, and professionals to explore how AI can transform workplace productivity.",
         imageUrl: "/1.png",
-      },  
-      {
-        title: "Assistant Faculty – AI for Productivity Workshop'",
-        description: "Served as Assistant Faculty for the executive training program on 'AI for Everyday Office Productivity' at Ahmedabad Management Association (Batch 2).\nThe session enabled professionals to explore how AI can be applied to real workplace challenges.",
-        imageUrl: "/3.png",
       },
       {
         title: "Ahmedabad Management Association: AI Training for Leaders",
@@ -61,9 +56,29 @@ const experiences = [
         imageUrl: "/Batch3.JPG",
       },
       {
-        title: "Attending the Program on 'Startup Ecosystem In India'",
-        description: "",
-        imageUrl: "/hcm.png",
+        title: "Monark University × HiringCraft: Campus Recruitment Drive",
+        description: "Led a campus recruitment initiative at Monark University in collaboration with HiringCraft, engaging with graduating students and evaluating talent for multiple roles.",
+        imageUrl: "/Monark University and HiringCraft/1.png",
+      },
+      {
+        title: "Recruiter Briefing & Process Orientation",
+        description: "Introduced the recruitment process, role expectations, and evaluation criteria to participating students for a clear and transparent selection journey.",
+        imageUrl: "/Monark University and HiringCraft/2.png",
+      },
+      {
+        title: "Interview Rounds & Candidate Assessment",
+        description: "Conducted multiple interview rounds focused on communication, problem-solving, and role-specific competencies to identify high-potential candidates.",
+        imageUrl: "/Monark University and HiringCraft/3.png",
+      },
+      {
+        title: "Student Interaction & Guidance",
+        description: "Shared practical insights on career readiness, resume structuring, and interview preparation to empower students for industry opportunities.",
+        imageUrl: "/Monark University and HiringCraft/4.png",
+      },
+      {
+        title: "Closing & Acknowledgment",
+        description: "Concluded the drive with acknowledgments and next steps, aligning selected candidates with respective hiring needs.",
+        imageUrl: "/Monark University and HiringCraft/5.png",
       },
     ],
   },
@@ -273,7 +288,7 @@ export const Experience = () => {
                                   animate={{ opacity: 1, x: 0 }}
                                   exit={{ opacity: 0, x: slideDirections[index] > 0 ? -60 : 60 }}
                                   transition={{ duration: 0.45, ease: 'easeInOut' }}
-                                  className="absolute inset-0"
+                                  className="absolute inset-0 overflow-hidden"
                                   drag="x"
                                   dragConstraints={{ left: 0, right: 0 }}
                                   dragElastic={0.2}
@@ -290,11 +305,19 @@ export const Experience = () => {
                                   }}
                                 >
                                   {!exp.media[mediaIndices[index]].videoUrl ? (
-                                    <img
-                                      src={exp.media[mediaIndices[index]].imageUrl}
-                                      alt={exp.media[mediaIndices[index]].title}
-                                      className="w-full h-full object-cover bg-black"
-                                    />
+                                    <>
+                                      <img
+                                        src={exp.media[mediaIndices[index]].imageUrl}
+                                        alt=""
+                                        aria-hidden="true"
+                                        className="absolute inset-0 w-full h-full object-cover blur-xl scale-110 opacity-40"
+                                      />
+                                      <img
+                                        src={exp.media[mediaIndices[index]].imageUrl}
+                                        alt={exp.media[mediaIndices[index]].title}
+                                        className="relative w-full h-full object-contain"
+                                      />
+                                    </>
                                   ) : (
                                     <iframe
                                       src={`https://www.youtube.com/embed/${(exp.media[mediaIndices[index]].videoUrl as string).split('v=')[1]?.split('&')[0]}?rel=0`}
